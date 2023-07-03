@@ -66,7 +66,7 @@ class DetailPage extends StatelessWidget {
         child: TextField(
           controller: contentController,
           decoration: InputDecoration(
-            hintText: "메모를 입력하세요",
+            hintText: "메모를",
             border: InputBorder.none,
           ),
           autofocus: true,
