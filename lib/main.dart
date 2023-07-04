@@ -17,7 +17,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-//MainPage
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
 
