@@ -12,7 +12,17 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: Colors.white,
+          title: Text(
+            "Todo",
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          ),
+        ),
+      body: Text(""),
       ),
     );
   }
