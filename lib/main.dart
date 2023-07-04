@@ -16,13 +16,13 @@ class MyApp extends StatelessWidget {
           centerTitle: true,
           backgroundColor: Colors.white,
           title: Text(
-            "Todo",
+            "To",
             style: TextStyle(
               color: Colors.black,
             ),
           ),
         ),
-      body: Text(""),
+        body: Text(""),
       ),
     );
   }
