@@ -69,6 +69,9 @@ class _MainPageState extends State<MainPage> {
         child: Icon(Icons.add),
         onPressed: () {
           String memo = "";
+          setState(() {
+            memoList.add(memo);
+          });
           Navigator.push(
             context,
             MaterialPageRoute(
