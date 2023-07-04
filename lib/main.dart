@@ -27,7 +27,7 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text("mymemo"),
       ),
-      body: Center(child: Text("메모를 작성해주세요")),
+      body: Center(child: Text("메모를 ")),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
