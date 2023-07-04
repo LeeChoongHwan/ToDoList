@@ -125,7 +125,9 @@ class SubPage extends StatelessWidget {
             maxLines: null,
             expands: true,
             keyboardType: TextInputType.multiline,
-            onChanged: (value) {}),
+            onChanged: (value) {
+              memoList[index] = value;
+            }),
       ),
     );
   }
