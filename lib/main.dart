@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'SubPage.dart';
+import 'sub_page.dart';
 
 void main() {
   runApp(const MyApp());
