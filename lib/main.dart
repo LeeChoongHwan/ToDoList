@@ -69,6 +69,9 @@ class MainPage extends StatelessWidget {
                             ),
                           ),
                         );
+                        if (memo.content.isEmpty) {
+                          memoService.deleteMemo(index: index);
+                        }
                       },
                     );
                   },
@@ -86,6 +89,9 @@ class MainPage extends StatelessWidget {
                   ),
                 ),
               );
+              if (memoList[memoService.memoList.length - 1].content.isEmpty) {
+                memoService.deleteMemo(index: memoList.length - 1);
+              }
             },
           ),
         );
