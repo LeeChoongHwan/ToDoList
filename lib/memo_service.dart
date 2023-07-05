@@ -35,12 +35,10 @@ class MemoService with ChangeNotifier {
   updatePinMemo({required int index}) {
     Memo memo = memoList[index];
     memo.isPinned = !memo.isPinned;
-    // memoList = [
-    //   ...memoList.where((element) => element.isPinned),
-    //   ...memoList.where((element) => !element.isPinned)
-    // ];
-
-    //리스트에 내리게 수정
+    memoList = [
+      ...memoList.where((element) => !element.isPinned),
+      ...memoList.where((element) => element.isPinned)
+    ];
     notifyListeners();
     saveMemoList();
   }
