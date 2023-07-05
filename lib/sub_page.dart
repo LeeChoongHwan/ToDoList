@@ -3,11 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'memo_service.dart';
 
+//color , text 파일 별도로 정리
+
+// ignore: must_be_immutable
 class SubPage extends StatelessWidget {
-  SubPage({Key? key, required this.index}) : super(key: key);
+  SubPage({Key? key, required this.index, required this.isModify})
+      : super(key: key);
   final int index;
+  final bool isModify;
 
   TextEditingController contentController = TextEditingController();
+  late String textValue;
 
   @override
   Widget build(BuildContext context) {
@@ -19,41 +25,15 @@ class SubPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.orange,
         actions: [
-          IconButton(
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: const Text("정말로 삭제하시겠습니까?"),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Text("취소"),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          memoService.deleteMemo(index: index);
-                          Navigator.pop(context); // 팝업 닫기
-                          Navigator.pop(context); // HomePage 로 가기
-                        },
-                        child: const Text(
-                          "확인",
-                          style: TextStyle(color: Colors.pink),
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              );
-            },
-            icon: const Icon(
-              Icons.delete,
-              color: Colors.white,
-            ),
-          )
+          TextButton(
+              onPressed: () {
+                memoService.updateMemo(index: index, content: textValue);
+                Navigator.pop(context);
+              },
+              child: Text(
+                isModify ? "수정" : "저장",
+                style: TextStyle(color: Colors.white),
+              ))
         ],
       ),
       body: Padding(
@@ -71,7 +51,7 @@ class SubPage extends StatelessWidget {
           expands: true,
           keyboardType: TextInputType.multiline,
           onChanged: (value) {
-            memoService.updateMemo(index: index, content: value);
+            textValue = value;
           },
         ),
       ),
