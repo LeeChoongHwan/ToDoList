@@ -47,6 +47,21 @@ class MainPage extends StatelessWidget {
               "Todo",
               style: TextStyle(color: Colors.white),
             ),
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    memoService.createMemo(content: '');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => SubPage(
+                          index: memoService.memoList.length - 1,
+                        ),
+                      ),
+                    );
+                  },
+                  icon: Icon(Icons.add))
+            ],
           ),
           body: memoList.isEmpty
               ? const Center(child: Text("메모를 작성해 주세요"))
@@ -84,21 +99,21 @@ class MainPage extends StatelessWidget {
                     );
                   },
                 ),
-          floatingActionButton: FloatingActionButton(
-            backgroundColor: Colors.orange,
-            child: const Icon(Icons.add),
-            onPressed: () {
-              memoService.createMemo(content: '');
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => SubPage(
-                    index: memoService.memoList.length - 1,
-                  ),
-                ),
-              );
-            },
-          ),
+          // floatingActionButton: FloatingActionButton(
+          //   backgroundColor: Colors.orange,
+          //   child: const Icon(Icons.add),
+          //   onPressed: () {
+          //     memoService.createMemo(content: '');
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //         builder: (_) => SubPage(
+          //           index: memoService.memoList.length - 1,
+          //         ),
+          //       ),
+          //     );
+          //   },
+          // ),
         );
       },
     );
