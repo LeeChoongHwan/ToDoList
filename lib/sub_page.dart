@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'memo_service.dart';
 
+//color , text 파일 별도로 정리
+
 class SubPage extends StatelessWidget {
   SubPage({Key? key, required this.index}) : super(key: key);
   final int index;
