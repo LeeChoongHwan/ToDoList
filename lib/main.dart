@@ -54,22 +54,33 @@ class MainPage extends StatelessWidget {
                   itemCount: memoList.length,
                   itemBuilder: (context, index) {
                     Memo memo = memoList[index];
-                    return ListTile(
-                      title: Text(
-                        memo.content,
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => SubPage(
-                              index: index,
-                            ),
+                    return Column(
+                      children: [
+                        ListTile(
+                          leading: IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.check_box_outline_blank)),
+                          title: Text(
+                            memo.content,
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                        );
-                      },
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => SubPage(
+                                  index: index,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                        Container(
+                          height: 1,
+                          color: Colors.black,
+                        )
+                      ],
                     );
                   },
                 ),
