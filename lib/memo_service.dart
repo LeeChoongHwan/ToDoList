@@ -52,7 +52,10 @@ class MemoService with ChangeNotifier {
     await saveMemoList();
   }
 
-  Future<void> updateMemo({required int index, required String content}) async {
+  Future<void> updateMemo({
+    required int index,
+    required String content,
+  }) async {
     Memo memo = memoList[index];
     memo.content = content;
     notifyListeners();
