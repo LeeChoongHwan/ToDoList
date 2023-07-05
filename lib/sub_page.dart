@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 // ignore: must_be_immutable
 class SubPage extends StatelessWidget {
@@ -36,7 +36,6 @@ class SubPage extends StatelessWidget {
                       TextButton(
                         onPressed: () {
                           memoList.removeAt(index);
-                          savememoList();
                           Navigator.pop(context);
                           Navigator.pop(context);
                         },
@@ -64,6 +63,8 @@ class SubPage extends StatelessWidget {
             decoration: InputDecoration(
               hintText: "메모를 입력하세요",
               border: InputBorder.none,
+              filled: true,
+              fillColor: Color(0xffD9D9D9)
             ),
             autofocus: true,
             maxLines: null,
@@ -71,14 +72,9 @@ class SubPage extends StatelessWidget {
             keyboardType: TextInputType.multiline,
             onChanged: (value) {
               memoList[index] = value;
-              savememoList();
             }),
       ),
     );
   }
 
-  void savememoList() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setStringList('memoList', memoList);
-  }
 }
