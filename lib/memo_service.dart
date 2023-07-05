@@ -1,10 +1,7 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
-
-import 'main.dart';
-
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Memo {
   Memo({
@@ -13,59 +10,58 @@ class Memo {
 
   String content;
 
-  Map toJson() {
+  Map<String, dynamic> toJson() {
     return {'content': content};
   }
 
-  factory Memo.fromJson(json) {
+  factory Memo.fromJson(Map<String, dynamic> json) {
     return Memo(content: json['content']);
   }
 }
 
-class MemoService extends ChangeNotifier {
+class MemoService with ChangeNotifier {
   MemoService() {
     loadMemoList();
   }
-  List<Memo> memoList = [
-    Memo(content: '장보기 목록: 사과, 양파'),
-    Memo(content: '새 메모'),
-  ];
 
-  createMemo({required String content}) {
+  List<Memo> memoList = [];
+
+  Future<void> createMemo({required String content}) async {
     Memo memo = Memo(content: content);
     memoList.add(memo);
     notifyListeners();
-    saveMemoList();
+    await saveMemoList();
   }
 
-  updateMemo({required int index, required String content}) {
+  Future<void> updateMemo({required int index, required String content}) async {
     Memo memo = memoList[index];
     memo.content = content;
     notifyListeners();
-    saveMemoList();
+    await saveMemoList();
   }
 
-  deleteMemo({required int index}) {
+  Future<void> deleteMemo({required int index}) async {
     memoList.removeAt(index);
     notifyListeners();
-    saveMemoList();
+    await saveMemoList();
   }
 
-  saveMemoList() {
-    List memoJsonList = memoList.map((memo) => memo.toJson()).toList();
-
+  Future<void> saveMemoList() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<Map<String, dynamic>> memoJsonList =
+        memoList.map((memo) => memo.toJson()).toList();
     String jsonString = jsonEncode(memoJsonList);
-
-    prefs.setString('memoList', jsonString);
+    await prefs.setString('memoList', jsonString);
   }
 
-  loadMemoList() {
+  Future<void> loadMemoList() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     String? jsonString = prefs.getString('memoList');
 
     if (jsonString == null) return;
 
-    List memoJsonList = jsonDecode(jsonString);
-
+    List<dynamic> memoJsonList = jsonDecode(jsonString);
     memoList = memoJsonList.map((json) => Memo.fromJson(json)).toList();
+    notifyListeners();
   }
 }
