@@ -97,6 +97,12 @@ class _MainPageState extends State<MainPage> {
                             memo.content,
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color:
+                                    memo.isPinned ? Colors.grey : Colors.black,
+                                decoration: memo.isPinned
+                                    ? TextDecoration.lineThrough
+                                    : TextDecoration.none),
                           ),
                           trailing: IconButton(
                               onPressed: () {
