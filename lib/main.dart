@@ -48,6 +48,26 @@ class MainPage extends StatelessWidget {
               "Todo",
               style: TextStyle(color: Colors.white),
             ),
+            actions: [
+              IconButton(
+                  onPressed: () async {
+                    memoService.createMemo(content: '');
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => SubPage(
+                          index: memoService.memoList.length - 1,
+                        ),
+                      ),
+                    );
+                    if (memoList[memoService.memoList.length - 1]
+                        .content
+                        .isEmpty) {
+                      memoService.deleteMemo(index: memoList.length - 1);
+                    }
+                  },
+                  icon: Icon(Icons.add))
+            ],
           ),
           body: memoList.isEmpty
               ? const Center(child: Text("메모를 작성해 주세요"))
@@ -55,20 +75,18 @@ class MainPage extends StatelessWidget {
                   itemCount: memoList.length,
                   itemBuilder: (context, index) {
                     Memo memo = memoList[index];
-                    return ListTile(
-                      title: Text(
-                        memo.content,
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => SubPage(
-                              index: index,
-                            ),
+                    return Column(
+                      children: [
+                        ListTile(
+                          leading: IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.check_box_outline_blank)),
+                          title: Text(
+                            memo.content,
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
                           ),
+<<<<<<< HEAD
                         );
                         //
                       },
@@ -93,6 +111,30 @@ class MainPage extends StatelessWidget {
               //
             },
           ),
+=======
+                          onTap: () async {
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => SubPage(
+                                  index: index,
+                                ),
+                              ),
+                            );
+                            if (memo.content.isEmpty) {
+                              memoService.deleteMemo(index: index);
+                            }
+                          },
+                        ),
+                        Container(
+                          height: 1,
+                          color: Colors.black,
+                        )
+                      ],
+                    );
+                  },
+                ),
+>>>>>>> f415f19ef97148746fc0986e3a0230eb2c6f8262
         );
       },
     );

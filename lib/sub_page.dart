@@ -27,6 +27,7 @@ class _SubPageState extends State<SubPage> {
   Widget build(BuildContext context) {
     MemoService memoService = context.read<MemoService>();
 
+<<<<<<< HEAD
     return WillPopScope(
       onWillPop: () async {
         if (isContentModified) {
@@ -80,6 +81,36 @@ class _SubPageState extends State<SubPage> {
                             Navigator.pop(context);
                           },
                           child: const Text("취소"),
+=======
+    contentController.text = memo.content;
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.orange,
+        actions: [
+          IconButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: const Text("정말로 삭제하시겠습니까?"),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text("취소"),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          memoService.deleteMemo(index: index);
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                        },
+                        child: const Text(
+                          "확인",
+                          style: TextStyle(color: Colors.pink),
+>>>>>>> f415f19ef97148746fc0986e3a0230eb2c6f8262
                         ),
                         TextButton(
                           onPressed: () {
