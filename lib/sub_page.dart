@@ -1,24 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 import 'main.dart';
+import 'memo_service.dart';
 
 class SubPage extends StatelessWidget {
-  SubPage({super.key, required this.memoList, required this.index});
-
-  final List<String> memoList;
+  SubPage({super.key, required this.index});
   final int index;
+
   TextEditingController contentController = TextEditingController();
 
   @override
-  void savememoList() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setStringList('memoList', memoList);
-  }
-
   Widget build(BuildContext context) {
-    contentController.text = memoList[index];
+    MemoService memoService = context.read<MemoService>();
+    Memo memo = memoService.memoList[index];
 
+    contentController.text = memo.content;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.orange,
@@ -41,10 +38,9 @@ class SubPage extends StatelessWidget {
                       // 확인 버튼
                       TextButton(
                         onPressed: () {
-                          memoList.removeAt(index);
+                          memoService.deleteMemo(index: index);
+                          //  memoList.removeAt(index);
                           // index에 해당하는 항목 삭제
-
-                          savememoList();
                           Navigator.pop(context); // 팝업 닫기
                           Navigator.pop(context); // HomePage 로 가기
                         },
@@ -78,13 +74,10 @@ class SubPage extends StatelessWidget {
             expands: true,
             keyboardType: TextInputType.multiline,
             onChanged: (value) {
-              memoList[index] = value;
-              savememoList();
+              memoService.updateMemo(index: index, content: value);
+              //    memoList[index] = value;
             }),
       ),
     );
   }
 }
-
-//상세 작성 페이지
-// ignore: must_be_immutable
