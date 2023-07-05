@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'main.dart';
 import 'memo_service.dart';
 
-
 // ignore: must_be_immutable
 class SubPage extends StatelessWidget {
   SubPage({super.key, required this.index});
@@ -66,11 +65,10 @@ class SubPage extends StatelessWidget {
         child: TextField(
             controller: contentController,
             decoration: InputDecoration(
-              hintText: "메모를 입력하세요",
-              border: InputBorder.none,
-              filled: true,
-              fillColor: Color(0xffD9D9D9)
-            ),
+                hintText: "메모를 입력하세요",
+                border: InputBorder.none,
+                filled: true,
+                fillColor: Color(0xffD9D9D9)),
             autofocus: true,
             maxLines: null,
             expands: true,

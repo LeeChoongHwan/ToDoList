@@ -1,10 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'memo_service.dart';
 import 'sub_page.dart';
 
-void main() {
+late SharedPreferences prefs;
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  prefs = await SharedPreferences.getInstance();
   runApp(
     MultiProvider(
       providers: [
@@ -56,22 +61,33 @@ class _MainPageState extends State<MainPage> {
                     itemCount: memoList.length,
                     itemBuilder: (context, index) {
                       Memo memo = memoList[index];
-                      return ListTile(
-                        title: Text(
-                          memo.content,
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => SubPage(
-                                index: index,
-                              ),
+                      return Column(
+                        children: [
+                          ListTile(
+                            leading: IconButton(
+                                onPressed: () {},
+                                icon: Icon(Icons.check_box_outline_blank)),
+                            title: Text(
+                              memo.content,
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                          );
-                        },
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => SubPage(
+                                    index: index,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                          Container(
+                            height: 1,
+                            color: Colors.grey,
+                          )
+                        ],
                       );
                     },
                   ),
