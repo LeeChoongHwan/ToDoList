@@ -1,20 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'main.dart';
+import 'memo_service.dart';
 
 
 // ignore: must_be_immutable
 class SubPage extends StatelessWidget {
-  SubPage({super.key, required this.memoList, required this.index});
-
-  final List<String> memoList;
+  SubPage({super.key, required this.index});
   final int index;
 
   TextEditingController contentController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    contentController.text = memoList[index];
+    MemoService memoService = context.read<MemoService>();
+    Memo memo = memoService.memoList[index];
 
+    contentController.text = memo.content;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.orange,
@@ -35,9 +38,11 @@ class SubPage extends StatelessWidget {
                       ),
                       TextButton(
                         onPressed: () {
-                          memoList.removeAt(index);
-                          Navigator.pop(context);
-                          Navigator.pop(context);
+                          memoService.deleteMemo(index: index);
+                          //  memoList.removeAt(index);
+                          // index에 해당하는 항목 삭제
+                          Navigator.pop(context); // 팝업 닫기
+                          Navigator.pop(context); // HomePage 로 가기
                         },
                         child: Text(
                           "확인",
@@ -71,10 +76,10 @@ class SubPage extends StatelessWidget {
             expands: true,
             keyboardType: TextInputType.multiline,
             onChanged: (value) {
-              memoList[index] = value;
+              memoService.updateMemo(index: index, content: value);
+              //    memoList[index] = value;
             }),
       ),
     );
   }
-
 }

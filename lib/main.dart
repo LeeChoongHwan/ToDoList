@@ -1,9 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'memo_service.dart';
 import 'sub_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => MemoService()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -27,63 +36,59 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  List<String> memoList = ['장보기 목록 : 사과, 양파', 'New Memo'];
-  bool a = true;
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: Colors.orange,
-        title: Text(
-          "Todo",
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
-      body: memoList.isEmpty
-          ? Center(child: Text("메모를 작성해 주세요"))
-          : ListView.builder(
-              itemCount: memoList.length,
-              itemBuilder: (context, index) {
-                String memo = memoList[index];
-                return ListTile(
-                  title: Text(
-                    memo,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => SubPage(
-                                index: index,
-                                memoList: memoList,
-                              )),
-                    );
-                  },
-                );
-              },
+    return Consumer<MemoService>(
+      builder: (context, memoService, child) {
+        List<Memo> memoList = memoService.memoList;
+        return Scaffold(
+            appBar: AppBar(
+              centerTitle: true,
+              backgroundColor: Colors.orange,
+              title: Text(
+                "Todo",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.orange,
-        child: Icon(Icons.add),
-        onPressed: () {
-          String memo = "";
-          setState(() {
-            memoList.add(memo);
-          });
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (_) => SubPage(
-                      index: memoList.indexOf(memo),
-                      memoList: memoList,
-                    )),
-          );
-        },
-      ),
+            body: memoList.isEmpty
+                ? Center(child: Text("메모를 작성해 주세요"))
+                : ListView.builder(
+                    itemCount: memoList.length,
+                    itemBuilder: (context, index) {
+                      Memo memo = memoList[index];
+                      return ListTile(
+                        title: Text(
+                          memo.content,
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => SubPage(
+                                index: index,
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
+            floatingActionButton: FloatingActionButton(
+                backgroundColor: Colors.orange,
+                child: Icon(Icons.add),
+                onPressed: () {
+                  memoService.createMemo(content: '');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => SubPage(
+                              index: memoService.memoList.length - 1,
+                            )),
+                  );
+                }));
+      },
     );
   }
 }
