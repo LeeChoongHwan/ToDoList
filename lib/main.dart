@@ -49,9 +49,9 @@ class MainPage extends StatelessWidget {
             ),
             actions: [
               IconButton(
-                  onPressed: () {
+                  onPressed: () async {
                     memoService.createMemo(content: '');
-                    Navigator.push(
+                    await Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (_) => SubPage(
@@ -59,6 +59,11 @@ class MainPage extends StatelessWidget {
                         ),
                       ),
                     );
+                    if (memoList[memoService.memoList.length - 1]
+                        .content
+                        .isEmpty) {
+                      memoService.deleteMemo(index: memoList.length - 1);
+                    }
                   },
                   icon: Icon(Icons.add))
             ],
@@ -80,8 +85,8 @@ class MainPage extends StatelessWidget {
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
                           ),
-                          onTap: () {
-                            Navigator.push(
+                          onTap: () async {
+                            await Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (_) => SubPage(
@@ -89,6 +94,9 @@ class MainPage extends StatelessWidget {
                                 ),
                               ),
                             );
+                            if (memo.content.isEmpty) {
+                              memoService.deleteMemo(index: index);
+                            }
                           },
                         ),
                         Container(
@@ -99,21 +107,6 @@ class MainPage extends StatelessWidget {
                     );
                   },
                 ),
-          // floatingActionButton: FloatingActionButton(
-          //   backgroundColor: Colors.orange,
-          //   child: const Icon(Icons.add),
-          //   onPressed: () {
-          //     memoService.createMemo(content: '');
-          //     Navigator.push(
-          //       context,
-          //       MaterialPageRoute(
-          //         builder: (_) => SubPage(
-          //           index: memoService.memoList.length - 1,
-          //         ),
-          //       ),
-          //     );
-          //   },
-          // ),
         );
       },
     );

@@ -36,8 +36,8 @@ class SubPage extends StatelessWidget {
                       TextButton(
                         onPressed: () {
                           memoService.deleteMemo(index: index);
-                          Navigator.pop(context); // 팝업 닫기
-                          Navigator.pop(context); // HomePage 로 가기
+                          Navigator.pop(context);
+                          Navigator.pop(context);
                         },
                         child: const Text(
                           "확인",
