@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -31,9 +32,14 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MainPage extends StatelessWidget {
+class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
 
+  @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Consumer<MemoService>(
@@ -79,39 +85,18 @@ class MainPage extends StatelessWidget {
                       children: [
                         ListTile(
                           leading: IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.check_box_outline_blank)),
+                            onPressed: () {
+                              memoService.updatePinMemo(index: index);
+                            },
+                            icon: Icon(memo.isPinned
+                                ? Icons.check_box
+                                : Icons.check_box_outline_blank),
+                          ),
                           title: Text(
                             memo.content,
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
                           ),
-<<<<<<< HEAD
-                        );
-                        //
-                      },
-                    );
-                  },
-                ),
-          floatingActionButton: FloatingActionButton(
-            backgroundColor: Colors.orange,
-            child: const Icon(Icons.add),
-            onPressed: () {
-              memoService.createMemo(content: '');
-
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => SubPage(
-                    index: memoService.memoList.length - 1,
-                  ),
-                ),
-              );
-
-              //
-            },
-          ),
-=======
                           onTap: () async {
                             await Navigator.push(
                               context,
@@ -134,7 +119,6 @@ class MainPage extends StatelessWidget {
                     );
                   },
                 ),
->>>>>>> f415f19ef97148746fc0986e3a0230eb2c6f8262
         );
       },
     );
