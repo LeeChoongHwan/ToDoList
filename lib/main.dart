@@ -69,7 +69,7 @@ class MainPage extends StatelessWidget {
             ],
           ),
           body: memoList.isEmpty
-              ? const Center(child: Text("메모를 작성해 주세요"))
+              ? const Center(child: Text(""))
               : ListView.builder(
                   itemCount: memoList.length,
                   itemBuilder: (context, index) {
