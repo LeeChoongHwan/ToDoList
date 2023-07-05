@@ -3,15 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
-class SubPage extends StatelessWidget {
+class SubPage extends StatefulWidget {
   SubPage({super.key, required this.memoList, required this.index});
 
   final List<String> memoList;
   final int index;
+
+  @override
+  State<SubPage> createState() => _SubPageState();
+}
+
+class _SubPageState extends State<SubPage> {
   TextEditingController contentController = TextEditingController();
 
   Widget build(BuildContext context) {
-    contentController.text = memoList[index];
+    contentController.text = widget.memoList[widget.index];
 
     return Scaffold(
       appBar: AppBar(
@@ -25,22 +31,18 @@ class SubPage extends StatelessWidget {
                   return AlertDialog(
                     title: Text("정말로 삭제하시겠습니까?"),
                     actions: [
-                      // 취소 버튼
                       TextButton(
                         onPressed: () {
                           Navigator.pop(context);
                         },
                         child: Text("취소"),
                       ),
-                      // 확인 버튼
                       TextButton(
                         onPressed: () {
-                          memoList.removeAt(index);
-                          // index에 해당하는 항목 삭제
-
+                          widget.memoList.removeAt(widget.index);
                           savememoList();
-                          Navigator.pop(context); // 팝업 닫기
-                          Navigator.pop(context); // HomePage 로 가기
+                          Navigator.pop(context); 
+                          Navigator.pop(context); 
                         },
                         child: Text(
                           "확인",
@@ -72,7 +74,7 @@ class SubPage extends StatelessWidget {
             expands: true,
             keyboardType: TextInputType.multiline,
             onChanged: (value) {
-              memoList[index] = value;
+              widget.memoList[widget.index] = value;
               savememoList();
             }),
       ),
@@ -81,9 +83,6 @@ class SubPage extends StatelessWidget {
 
   void savememoList() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setStringList('memoList', memoList);
+    prefs.setStringList('memoList', widget.memoList);
   }
 }
-
-//상세 작성 페이지
-// ignore: must_be_immutable
