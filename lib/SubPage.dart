@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'main.dart';
 
-// ignore: must_be_immutable
 class SubPage extends StatelessWidget {
   SubPage({super.key, required this.memoList, required this.index});
 
@@ -10,6 +10,7 @@ class SubPage extends StatelessWidget {
   final int index;
   TextEditingController contentController = TextEditingController();
 
+  @override
   void savememoList() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setStringList('memoList', memoList);
