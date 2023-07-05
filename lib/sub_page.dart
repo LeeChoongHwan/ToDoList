@@ -3,22 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
-class SubPage extends StatefulWidget {
-  const SubPage({super.key, required this.memoList, required this.index});
+class SubPage extends StatelessWidget {
+  SubPage({super.key, required this.memoList, required this.index});
 
   final List<String> memoList;
   final int index;
 
-  @override
-  State<SubPage> createState() => _SubPageState();
-}
-
-class _SubPageState extends State<SubPage> {
   TextEditingController contentController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    contentController.text = widget.memoList[widget.index];
+    contentController.text = memoList[index];
 
     return Scaffold(
       appBar: AppBar(
@@ -40,7 +35,7 @@ class _SubPageState extends State<SubPage> {
                       ),
                       TextButton(
                         onPressed: () {
-                          widget.memoList.removeAt(widget.index);
+                          memoList.removeAt(index);
                           savememoList();
                           Navigator.pop(context);
                           Navigator.pop(context);
@@ -75,7 +70,7 @@ class _SubPageState extends State<SubPage> {
             expands: true,
             keyboardType: TextInputType.multiline,
             onChanged: (value) {
-              widget.memoList[widget.index] = value;
+              memoList[index] = value;
               savememoList();
             }),
       ),
@@ -84,6 +79,6 @@ class _SubPageState extends State<SubPage> {
 
   void savememoList() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setStringList('memoList', widget.memoList);
+    prefs.setStringList('memoList', memoList);
   }
 }
