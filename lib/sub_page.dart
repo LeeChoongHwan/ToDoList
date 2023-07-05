@@ -27,8 +27,10 @@ class SubPage extends StatelessWidget {
         actions: [
           TextButton(
               onPressed: () {
-                memoService.updateMemo(index: index, content: textValue);
-                Navigator.pop(context);
+                if (textValue != "") {
+                  memoService.updateMemo(index: index, content: textValue);
+                  Navigator.pop(context);
+                }
               },
               child: Text(
                 isModify ? "수정" : "저장",
