@@ -63,6 +63,7 @@ class _MainPageState extends State<MainPage> {
                       MaterialPageRoute(
                         builder: (_) => SubPage(
                           index: memoService.memoList.length - 1,
+                          isModify: false,
                         ),
                       ),
                     );
@@ -135,6 +136,7 @@ class _MainPageState extends State<MainPage> {
                               MaterialPageRoute(
                                 builder: (_) => SubPage(
                                   index: index,
+                                  isModify: true,
                                 ),
                               ),
                             );
