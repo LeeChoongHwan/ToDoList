@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class SubPage extends StatefulWidget {
-  SubPage({super.key, required this.memoList, required this.index});
+  const SubPage({super.key, required this.memoList, required this.index});
 
   final List<String> memoList;
   final int index;
@@ -16,6 +16,7 @@ class SubPage extends StatefulWidget {
 class _SubPageState extends State<SubPage> {
   TextEditingController contentController = TextEditingController();
 
+  @override
   Widget build(BuildContext context) {
     contentController.text = widget.memoList[widget.index];
 
@@ -41,8 +42,8 @@ class _SubPageState extends State<SubPage> {
                         onPressed: () {
                           widget.memoList.removeAt(widget.index);
                           savememoList();
-                          Navigator.pop(context); 
-                          Navigator.pop(context); 
+                          Navigator.pop(context);
+                          Navigator.pop(context);
                         },
                         child: Text(
                           "확인",
