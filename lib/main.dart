@@ -39,6 +39,7 @@ class MainPage extends StatelessWidget {
     return Consumer<MemoService>(
       builder: (context, memoService, child) {
         List<Memo> memoList = memoService.memoList;
+
         return Scaffold(
           appBar: AppBar(
             centerTitle: true,
@@ -69,9 +70,7 @@ class MainPage extends StatelessWidget {
                             ),
                           ),
                         );
-                        if (memo.content.isEmpty) {
-                          memoService.deleteMemo(index: index);
-                        }
+                        //
                       },
                     );
                   },
@@ -81,6 +80,7 @@ class MainPage extends StatelessWidget {
             child: const Icon(Icons.add),
             onPressed: () {
               memoService.createMemo(content: '');
+
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -89,9 +89,8 @@ class MainPage extends StatelessWidget {
                   ),
                 ),
               );
-              if (memoList[memoService.memoList.length - 1].content.isEmpty) {
-                memoService.deleteMemo(index: memoList.length - 1);
-              }
+
+              //
             },
           ),
         );
