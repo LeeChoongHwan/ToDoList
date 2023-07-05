@@ -30,20 +30,11 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   List<String> memoList = ['장보기 목록 : 사과, 양파', 'New Memo'];
   bool a = true;
+
   @override
   void initState() {
     super.initState();
     lodememoList();
-  }
-
-  void lodememoList() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String>? loadedMemoList = prefs.getStringList('memoList');
-    if (loadedMemoList != null) {
-      setState(() {
-        memoList = loadedMemoList;
-      });
-    }
   }
 
   Widget build(BuildContext context) {
@@ -100,5 +91,15 @@ class _MainPageState extends State<MainPage> {
         },
       ),
     );
+  }
+
+  void lodememoList() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String>? loadedMemoList = prefs.getStringList('memoList');
+    if (loadedMemoList != null) {
+      setState(() {
+        memoList = loadedMemoList;
+      });
+    }
   }
 }

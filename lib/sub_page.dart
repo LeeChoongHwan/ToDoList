@@ -10,11 +10,6 @@ class SubPage extends StatelessWidget {
   final int index;
   TextEditingController contentController = TextEditingController();
 
-  void savememoList() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setStringList('memoList', memoList);
-  }
-
   Widget build(BuildContext context) {
     contentController.text = memoList[index];
 
@@ -82,6 +77,11 @@ class SubPage extends StatelessWidget {
             }),
       ),
     );
+  }
+
+  void savememoList() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setStringList('memoList', memoList);
   }
 }
 
