@@ -68,8 +68,8 @@ class MemoService with ChangeNotifier {
     Memo memo = memoList[index];
     memo.isChecked = !memo.isChecked;
     memoList = [
-      ...memoList.where((element) => !element.isChecked),
-      ...memoList.where((element) => element.isChecked)
+      // ...memoList.where((element) => !element.isChecked),
+      // ...memoList.where((element) => element.isChecked)
     ];
     notifyListeners();
     saveMemoList();
