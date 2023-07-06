@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'memo_service.dart';
+import 'appColors.dart';
 
 // ignore: must_be_immutable
 class CreateTodoPage extends StatelessWidget {
@@ -22,7 +23,7 @@ class CreateTodoPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.orange,
+        backgroundColor: AppColors.applicationMainColor,
         actions: [
           TextButton(
               onPressed: () {
@@ -31,7 +32,7 @@ class CreateTodoPage extends StatelessWidget {
               },
               child: Text(
                 isModify ? "수정" : "저장",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: AppColors.appBarTextColor),
               ))
         ],
       ),
@@ -43,7 +44,7 @@ class CreateTodoPage extends StatelessWidget {
                 hintText: "내용을 입력하세요",
                 border: InputBorder.none,
                 filled: true,
-                fillColor: Color(0xffD9D9D9)),
+                fillColor: AppColors.textFieldColor),
             autofocus: true,
             maxLines: null,
             expands: true,

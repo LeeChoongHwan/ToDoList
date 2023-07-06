@@ -3,21 +3,21 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Memo {
-  Memo({required this.content, this.isPinned = false});
+  Memo({required this.content, this.isChecked = false});
 
   String content;
-  bool isPinned;
+  bool isChecked;
 
   Map<String, dynamic> toJson() {
     return {
       'content': content,
-      'isPinned': isPinned,
+      'isPinned': isChecked,
     };
   }
 
   Memo.fromJson(Map<String, dynamic> json)
       : content = json['content'],
-        isPinned = json['isPinned'] ?? false;
+        isChecked = json['isPinned'] ?? false;
 }
 
 class MemoService with ChangeNotifier {
@@ -66,10 +66,10 @@ class MemoService with ChangeNotifier {
 
   updatePinMemo({required int index}) {
     Memo memo = memoList[index];
-    memo.isPinned = !memo.isPinned;
+    memo.isChecked = !memo.isChecked;
     memoList = [
-      ...memoList.where((element) => !element.isPinned),
-      ...memoList.where((element) => element.isPinned)
+      ...memoList.where((element) => !element.isChecked),
+      ...memoList.where((element) => element.isChecked)
     ];
     notifyListeners();
     saveMemoList();

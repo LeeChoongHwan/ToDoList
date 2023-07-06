@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'memo_service.dart';
-import 'sub_page.dart';
+import 'create_todo_page.dart';
+import 'appColors.dart';
 
 class ListPage extends StatefulWidget {
   const ListPage({Key? key}) : super(key: key);
@@ -20,10 +21,10 @@ class _ListPageState extends State<ListPage> {
         return Scaffold(
           appBar: AppBar(
             centerTitle: true,
-            backgroundColor: Colors.orange,
+            backgroundColor: AppColors.applicationMainColor,
             title: const Text(
               "Todo",
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: AppColors.appBarTextColor),
             ),
             actions: [
               //Todo 추가 버튼
@@ -61,7 +62,7 @@ class _ListPageState extends State<ListPage> {
                             onPressed: () {
                               memoService.updatePinMemo(index: index);
                             },
-                            icon: Icon(memo.isPinned
+                            icon: Icon(memo.isChecked
                                 ? Icons.check_box
                                 : Icons.check_box_outline_blank),
                           ),
@@ -70,9 +71,10 @@ class _ListPageState extends State<ListPage> {
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                                color:
-                                    memo.isPinned ? Colors.grey : Colors.black,
-                                decoration: memo.isPinned
+                                color: memo.isChecked
+                                    ? AppColors.checkedTextColor
+                                    : AppColors.uncheckedTextColor,
+                                decoration: memo.isChecked
                                     ? TextDecoration.lineThrough
                                     : TextDecoration.none),
                           ),
@@ -98,7 +100,7 @@ class _ListPageState extends State<ListPage> {
                         ),
                         Container(
                           height: 1,
-                          color: Colors.black,
+                          color: AppColors.divider,
                         )
                       ],
                     );
@@ -131,7 +133,7 @@ class _ListPageState extends State<ListPage> {
               },
               child: const Text(
                 "확인",
-                style: TextStyle(color: Colors.pink),
+                style: TextStyle(color: AppColors.dialogConfirmButtonColor),
               ),
             ),
           ],
