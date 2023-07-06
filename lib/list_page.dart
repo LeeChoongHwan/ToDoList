@@ -30,7 +30,7 @@ class _ListPageState extends State<ListPage> {
               //Todo 추가 버튼
               IconButton(
                   onPressed: () async {
-                    memoService.createMemo(content: '');
+                    memoService.createMemo(title: '', content: '');
                     await Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -41,7 +41,7 @@ class _ListPageState extends State<ListPage> {
                       ),
                     );
                     if (memoList[memoService.memoList.length - 1]
-                        .content
+                        .title
                         .isEmpty) {
                       memoService.deleteMemo(index: memoList.length - 1);
                     }
@@ -67,7 +67,7 @@ class _ListPageState extends State<ListPage> {
                                 : Icons.check_box_outline_blank),
                           ),
                           title: Text(
-                            memo.content,
+                            memo.title,
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -93,7 +93,7 @@ class _ListPageState extends State<ListPage> {
                                 ),
                               ),
                             );
-                            if (memo.content.isEmpty) {
+                            if (memo.title.isEmpty) {
                               memoService.deleteMemo(index: index);
                             }
                           },

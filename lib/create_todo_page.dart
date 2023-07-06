@@ -10,14 +10,22 @@ class CreateTodoPage extends StatelessWidget {
   final int index;
   final bool isModify;
 
+  TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
+<<<<<<< HEAD
   late String textValue;
+=======
+
+  String contentValue = "";
+  String titleValue = "";
+>>>>>>> 94235731430053ce73facd5c34e7c21cb8f50ab8
 
   @override
   Widget build(BuildContext context) {
     MemoService memoService = context.read<MemoService>();
     Memo memo = memoService.memoList[index];
 
+    titleController.text = memo.title;
     contentController.text = memo.content;
 
     return Scaffold(
@@ -26,8 +34,11 @@ class CreateTodoPage extends StatelessWidget {
         actions: [
           TextButton(
               onPressed: () {
-                memoService.updateMemo(index: index, content: textValue);
-                Navigator.pop(context);
+                if (contentValue.isNotEmpty && titleValue.isNotEmpty) {
+                  memoService.updateMemo(
+                      index: index, content: contentValue, title: titleValue);
+                  Navigator.pop(context);
+                }
               },
               child: Text(
                 isModify ? "수정" : "저장",
@@ -37,20 +48,42 @@ class CreateTodoPage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(32),
-        child: TextField(
-            controller: contentController,
-            decoration: const InputDecoration(
-                hintText: "내용을 입력하세요",
-                border: InputBorder.none,
-                filled: true,
-                fillColor: AppColors.textFieldColor),
-            autofocus: true,
-            maxLines: null,
-            expands: true,
-            keyboardType: TextInputType.multiline,
-            onChanged: (value) {
-              textValue = value;
-            }),
+        child: Column(
+          children: [
+            TextField(
+                controller: titleController,
+                decoration: const InputDecoration(
+                    hintText: "제목을 입력하세요",
+                    border: InputBorder.none,
+                    filled: true,
+                    fillColor: AppColors.textFieldColor),
+                autofocus: true,
+                maxLines: 1,
+                expands: false,
+                keyboardType: TextInputType.multiline,
+                onChanged: (value) {
+                  titleValue = value;
+                }),
+            SizedBox(height: 20),
+            SizedBox(
+              height: 300,
+              child: TextField(
+                  controller: contentController,
+                  decoration: const InputDecoration(
+                      hintText: "내용을 입력하세요",
+                      border: InputBorder.none,
+                      filled: true,
+                      fillColor: AppColors.textFieldColor),
+                  autofocus: true,
+                  maxLines: null,
+                  expands: true,
+                  keyboardType: TextInputType.multiline,
+                  onChanged: (value) {
+                    contentValue = value;
+                  }),
+            )
+          ],
+        ),
       ),
     );
   }
