@@ -3,10 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'list_page.dart';
 import 'memo_service.dart';
-<<<<<<< HEAD
-import 'list_page.dart';
-=======
->>>>>>> 379b281f14624129610b5cfb2ea730da52cbc59d
 
 late SharedPreferences prefs;
 
