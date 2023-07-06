@@ -58,7 +58,7 @@ class _MainPageState extends State<MainPage> {
               IconButton(
                   onPressed: () async {
                     memoService.createMemo(content: '');
-                    await Navigator.push(
+                    int? modifiedIndex = await Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (_) => SubPage(
@@ -67,10 +67,11 @@ class _MainPageState extends State<MainPage> {
                         ),
                       ),
                     );
-                    if (memoList[memoService.memoList.length - 1]
-                        .content
-                        .isEmpty) {
-                      memoService.deleteMemo(index: memoList.length - 1);
+                    if (modifiedIndex != null) {
+                      if (memoList[modifiedIndex].content.isEmpty) {
+                        memoService.deleteMemo(index: modifiedIndex);
+                      }
+                      setState(() {}); // 변경된 데이터를 반영하여 화면 업데이트
                     }
                   },
                   icon: Icon(Icons.add))
