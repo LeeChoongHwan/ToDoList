@@ -96,7 +96,7 @@ class _MainPageState extends State<MainPage> {
                           ),
                           title: Text(
                             memo.content,
-                            maxLines: 3,
+                            maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 color:
