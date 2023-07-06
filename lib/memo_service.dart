@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -7,6 +6,7 @@ class Memo {
   Memo({required this.content, this.isPinned = false});
 
   String content;
+  bool isPinned;
 
   Map<String, dynamic> toJson() {
     return {
@@ -14,8 +14,6 @@ class Memo {
       'isPinned': isPinned,
     };
   }
-
-  bool isPinned;
 
   Memo.fromJson(Map<String, dynamic> json)
       : content = json['content'],
@@ -28,17 +26,6 @@ class MemoService with ChangeNotifier {
   }
 
   List<Memo> memoList = [];
-
-  updatePinMemo({required int index}) {
-    Memo memo = memoList[index];
-    memo.isPinned = !memo.isPinned;
-    memoList = [
-      ...memoList.where((element) => !element.isPinned),
-      ...memoList.where((element) => element.isPinned)
-    ];
-    notifyListeners();
-    saveMemoList();
-  }
 
   Future<void> createMemo({required String content}) async {
     Memo memo = Memo(content: content);
@@ -71,11 +58,20 @@ class MemoService with ChangeNotifier {
   Future<void> loadMemoList() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? jsonString = prefs.getString('memoList');
-
     if (jsonString == null) return;
-
     List<dynamic> memoJsonList = jsonDecode(jsonString);
     memoList = memoJsonList.map((json) => Memo.fromJson(json)).toList();
     notifyListeners();
+  }
+
+  updatePinMemo({required int index}) {
+    Memo memo = memoList[index];
+    memo.isPinned = !memo.isPinned;
+    memoList = [
+      ...memoList.where((element) => !element.isPinned),
+      ...memoList.where((element) => element.isPinned)
+    ];
+    notifyListeners();
+    saveMemoList();
   }
 }

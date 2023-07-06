@@ -1,13 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'memo_service.dart';
 
-//color , text 파일 별도로 정리
-
 // ignore: must_be_immutable
-class SubPage extends StatelessWidget {
-  SubPage({Key? key, required this.index, required this.isModify})
+class CreateTodoPage extends StatelessWidget {
+  CreateTodoPage({Key? key, required this.index, required this.isModify})
       : super(key: key);
   final int index;
   final bool isModify;
