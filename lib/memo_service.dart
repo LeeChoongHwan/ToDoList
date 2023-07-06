@@ -1,9 +1,9 @@
 import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Memo {
+<<<<<<< HEAD
   Memo({
     required this.content,
     this.isPinned = false,
@@ -14,14 +14,27 @@ class Memo {
     return {
       'content': content,
       'isPinned': isPinned,
+=======
+  Memo({required this.content, this.isChecked = false});
+
+  String content;
+  bool isChecked;
+
+  Map<String, dynamic> toJson() {
+    return {
+      'content': content,
+      'isPinned': isChecked,
+>>>>>>> 379b281f14624129610b5cfb2ea730da52cbc59d
     };
   }
 
-  bool isPinned;
-
   Memo.fromJson(Map<String, dynamic> json)
       : content = json['content'],
+<<<<<<< HEAD
         isPinned = json['isPinned'] ?? false;
+=======
+        isChecked = json['isPinned'] ?? false;
+>>>>>>> 379b281f14624129610b5cfb2ea730da52cbc59d
 }
 
 class MemoService with ChangeNotifier {
@@ -31,6 +44,7 @@ class MemoService with ChangeNotifier {
 
   List<Memo> memoList = [];
 
+<<<<<<< HEAD
   updatePinMemo({required int index}) {
     Memo memo = memoList[index];
     memo.isPinned = !memo.isPinned;
@@ -46,16 +60,23 @@ class MemoService with ChangeNotifier {
 
   Future<void> createMemo({required String content}) async {
     // 추가함memoContent
+=======
+  Future<void> createMemo({required String content}) async {
+>>>>>>> 379b281f14624129610b5cfb2ea730da52cbc59d
     Memo memo = Memo(content: content);
     memoList.add(memo);
     notifyListeners();
     await saveMemoList();
   }
 
+<<<<<<< HEAD
   Future<void> updateMemo({
     required int index,
     required String content,
   }) async {
+=======
+  Future<void> updateMemo({required int index, required String content}) async {
+>>>>>>> 379b281f14624129610b5cfb2ea730da52cbc59d
     Memo memo = memoList[index];
     memo.content = content;
     notifyListeners();
@@ -79,11 +100,20 @@ class MemoService with ChangeNotifier {
   Future<void> loadMemoList() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? jsonString = prefs.getString('memoList');
-
     if (jsonString == null) return;
-
     List<dynamic> memoJsonList = jsonDecode(jsonString);
     memoList = memoJsonList.map((json) => Memo.fromJson(json)).toList();
     notifyListeners();
+  }
+
+  updatePinMemo({required int index}) {
+    Memo memo = memoList[index];
+    memo.isChecked = !memo.isChecked;
+    memoList = [
+      ...memoList.where((element) => !element.isChecked),
+      ...memoList.where((element) => element.isChecked)
+    ];
+    notifyListeners();
+    saveMemoList();
   }
 }
