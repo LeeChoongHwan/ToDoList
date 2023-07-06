@@ -4,16 +4,15 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Memo {
-  Memo({
-    required this.content,
-    this.isPinned = false,
-  });
+  Memo({required this.content, required this.content2, this.isPinned = false});
 
   String content;
+  String content2;
 
   Map<String, dynamic> toJson() {
     return {
       'content': content,
+      'content2': content2,
       'isPinned': isPinned,
     };
   }
@@ -22,6 +21,7 @@ class Memo {
 
   Memo.fromJson(Map<String, dynamic> json)
       : content = json['content'],
+        content2 = json['content2'],
         isPinned = json['isPinned'] ?? false;
 }
 
@@ -44,15 +44,19 @@ class MemoService with ChangeNotifier {
   }
 
   Future<void> createMemo({required String content}) async {
-    Memo memo = Memo(content: content);
+    Memo memo = Memo(content: content, content2: '');
     memoList.add(memo);
     notifyListeners();
     await saveMemoList();
   }
 
-  Future<void> updateMemo({required int index, required String content}) async {
+  Future<void> updateMemo(
+      {required int index,
+      required String content,
+      required String content2}) async {
     Memo memo = memoList[index];
     memo.content = content;
+    memo.content2 = content2;
     notifyListeners();
     await saveMemoList();
   }
