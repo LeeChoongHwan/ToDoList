@@ -42,43 +42,45 @@ class CreateTodoPage extends StatelessWidget {
               ))
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(32),
-        child: Column(
-          children: [
-            TextField(
-                controller: titleController,
-                decoration: const InputDecoration(
-                    hintText: "제목을 입력하세요",
-                    border: InputBorder.none,
-                    filled: true,
-                    fillColor: AppColors.textFieldColor),
-                autofocus: true,
-                maxLines: 1,
-                expands: false,
-                keyboardType: TextInputType.multiline,
-                onChanged: (value) {
-                  titleValue = value;
-                }),
-            SizedBox(height: 20),
-            SizedBox(
-              height: 300,
-              child: TextField(
-                  controller: contentController,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(32),
+          child: Column(
+            children: [
+              TextField(
+                  controller: titleController,
                   decoration: const InputDecoration(
-                      hintText: "내용을 입력하세요",
+                      hintText: "제목을 입력하세요",
                       border: InputBorder.none,
                       filled: true,
                       fillColor: AppColors.textFieldColor),
                   autofocus: true,
-                  maxLines: null,
-                  expands: true,
+                  maxLines: 1,
+                  expands: false,
                   keyboardType: TextInputType.multiline,
                   onChanged: (value) {
-                    contentValue = value;
+                    titleValue = value;
                   }),
-            )
-          ],
+              SizedBox(height: 20),
+              SizedBox(
+                height: 300,
+                child: TextField(
+                    controller: contentController,
+                    decoration: const InputDecoration(
+                        hintText: "내용을 입력하세요",
+                        border: InputBorder.none,
+                        filled: true,
+                        fillColor: AppColors.textFieldColor),
+                    autofocus: true,
+                    maxLines: null,
+                    expands: true,
+                    keyboardType: TextInputType.multiline,
+                    onChanged: (value) {
+                      contentValue = value;
+                    }),
+              )
+            ],
+          ),
         ),
       ),
     );
