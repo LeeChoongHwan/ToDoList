@@ -12,13 +12,9 @@ class CreateTodoPage extends StatelessWidget {
 
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
-<<<<<<< HEAD
-  late String textValue;
-=======
 
   String contentValue = "";
   String titleValue = "";
->>>>>>> 94235731430053ce73facd5c34e7c21cb8f50ab8
 
   @override
   Widget build(BuildContext context) {
